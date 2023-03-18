@@ -3,141 +3,157 @@
    <head>
       <title>Pong Game</title>
       <style>
-         canvas {
-         border: 1px solid black;
+         #canvas {
+         background-color: #444444;
+         margin: 0 auto;
+         display: block;
+         }
+         body {
+         background-image: url("https://i.imgur.com/LMJSKpJ.png");
+         background-repeat: repeat;
+         background-size: auto;
          }
       </style>
    </head>
    <body>
-      <canvas id="canvas" width="400" height="300"></canvas>
-      <br>
+      <canvas id="canvas" width="480" height="320"></canvas>
       <button id="start-button">Start Game</button>
       <script>
-         // Set up the canvas and context
+         // Set up the canvas and game objects
          var canvas = document.getElementById('canvas');
          var ctx = canvas.getContext('2d');
          
-         // Set up the ball
          var ball = {
            x: canvas.width / 2,
            y: canvas.height / 2,
-           dx: 5,
-           dy: 5,
-           radius: 5,
+           radius: 10,
+           dx: -1,
+           dy: -1,
          };
          
-         // Set up the paddle
          var paddle = {
-           x: canvas.width / 2 - 40,
+           x: canvas.width / 2 - 25,
            y: canvas.height - 20,
-           width: 80,
+           width: 50,
            height: 10,
-           dx: 0,
+           speed: 3,
+           isMovingLeft: false,
+           isMovingRight: false,
          };
          
-         // Draw the ball and paddle
+         var score = 0;
+         var interval;
+         
+         // Draw the ball and paddle on the canvas
          function draw() {
-           // Clear the canvas
+           // Clear the canvas before drawing the objects
            ctx.clearRect(0, 0, canvas.width, canvas.height);
          
            // Draw the ball
            ctx.beginPath();
            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-           ctx.fillStyle = 'black';
+           ctx.fillStyle = '#FFFFFF';
            ctx.fill();
            ctx.closePath();
          
            // Draw the paddle
            ctx.beginPath();
            ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height);
-           ctx.fillStyle = 'black';
+           ctx.fillStyle = '#FFFFFF';
            ctx.fill();
            ctx.closePath();
          
-           // Display the score
+           // Display the current score
            ctx.font = '16px Arial';
+           ctx.fillStyle = '#FFFFFF';
            ctx.fillText('Score: ' + score, 10, 20);
          }
          
-         // Update the ball position
+         // Update the position of the ball
          function updateBall() {
-           // Check if the ball collides with the walls or paddle
-           if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+           ball.x += ball.dx;
+           ball.y += ball.dy;
+         
+           // Bounce the ball off the walls and paddle
+           if (
+             ball.x + ball.radius > canvas.width ||
+             ball.x - ball.radius < 0
+           ) {
              ball.dx = -ball.dx;
            }
-           if (ball.y + ball.dy < ball.radius) {
+         
+           if (ball.y - ball.radius < 0) {
              ball.dy = -ball.dy;
-           } else if (ball.y + ball.dy > canvas.height - ball.radius) {
+           } else if (ball.y + ball.radius > canvas.height - paddle.height) {
              if (ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
                ball.dy = -ball.dy;
                score++;
              } else {
                clearInterval(interval);
-               alert('Game over! Score: ' + score);
+               alert('Game over! Your score is ' + score);
+               init();
              }
            }
-         
-           // Move the ball
-           ball.x += ball.dx;
-           ball.y += ball.dy;
          }
          
-         // Update the paddle position
+         // Update the position of the paddle
          function updatePaddle() {
-           // Move the paddle
-           paddle.x += paddle.dx;
+           if (paddle.isMovingLeft) {
+             paddle.x -= paddle.speed;
+           } else if (paddle.isMovingRight) {
+             paddle.x += paddle.speed;
+           }
          
            // Keep the paddle within the bounds of the canvas
            if (paddle.x < 0) {
              paddle.x = 0;
-           }
-           if (paddle.x + paddle.width > canvas.width) {
+           } else if (paddle.x + paddle.width > canvas.width) {
              paddle.x = canvas.width - paddle.width;
            }
          }
          
-         // Move the paddle
-         function movePaddle(event) {
-           if (event.key == 'a') {
-             paddle.dx = -10;
-           }
-           if (event.key == 'd') {
-             paddle.dx = 10;
-           }
+         // Move the paddle with the keyboard
+         function movePaddleWithKeyboard() {
+           document.addEventListener('keydown', function (event) {
+             if (event.code === 'KeyA') {
+               paddle.isMovingLeft = true;
+             } else if (event.code === 'KeyD') {
+               paddle.isMovingRight = true;
+             }
+           });
+         
+           document.addEventListener('keyup', function (event) {
+             if (event.code === 'KeyA') {
+               paddle.isMovingLeft = false;
+             } else if (event.code === 'KeyD') {
+               paddle.isMovingRight = false;
+             }
+           });
          }
          
-         // Stop the paddle
-         function stopPaddle(event) {
-           if (event.key == 'a' || event.key == 'd') {
-             paddle.dx = 0;
-           }
-           }  
-         // Set up the game loop
-         var interval;
-         var score;
-         
-         function startGame() {
-           // Reset the ball and paddle positions
+         // Initialize the game
+         function init() {
            ball.x = canvas.width / 2;
            ball.y = canvas.height / 2;
            paddle.x = canvas.width / 2 - paddle.width / 2;
-         
-           // Reset the score and start the game loop
            score = 0;
-           interval = setInterval(function () {
-             updateBall();
-             updatePaddle();
-             draw();
-           }, 10);
+           draw();
+         
+           // Wait for the user to click the Start button
+           document.getElementById('start-button').onclick = function () {
+             // Move the paddle with the keyboard
+             movePaddleWithKeyboard();
+         
+             // Update the game every 10 milliseconds
+             interval = setInterval(function () {
+               updateBall();
+               updatePaddle();
+               draw();
+             }, 10);
+           };
          }
          
-         // Start the game when the start button is clicked
-         var startButton = document.getElementById('start-button');
-         startButton.addEventListener('click', startGame);
-         
-         // Move the paddle with the keyboard
-         document.addEventListener('keydown', movePaddle);
-         document.addEventListener('keyup', stopPaddle);
+         init();
       </script>
    </body>
 </html>
