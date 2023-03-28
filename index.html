@@ -16,102 +16,84 @@
       }
 
       button {
-        background-color: #fff;
-        color: #000;
-        border: none;
-        padding: 12px 24px;
+        padding: 20px;
+        background-color: #F08080;
+        color: #fff;
         font-size: 24px;
-        cursor: pointer;
         border-radius: 10px;
+        border: none;
+        outline: none;
+        cursor: pointer;
       }
 
-      #heart-container {
+      #heartContainer {
+        position: relative;
         display: none;
-        flex-direction: column;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
       }
 
       #heart {
-        font-size: 120px;
-        animation: slide-heart 1.5s forwards ease-out;
-      }
-
-      #text {
-        display: none;
-        font-size: 36px;
-        margin-top: 50px;
-      }
-
-      .heart {
         position: absolute;
-        display: block;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+      }
+
+      .heartPart {
+        position: absolute;
+        background-color: #F08080;
+        width: 50px;
+        height: 80px;
+        border-radius: 50px 50px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        transition: all 0.5s ease-in-out;
+      }
+
+      #heartTop {
+        top: -20px;
+      }
+
+      #heartBottom {
+        top: 30px;
+      }
+
+      #loveText {
+        text-align: center;
+        margin-top: 20px;
+        display: none;
+      }
+
+      .heartParticle {
+        position: absolute;
+        background-color: #F08080;
         width: 10px;
         height: 10px;
-        background-color: #fff;
         border-radius: 50%;
-        animation: animate 1.5s linear infinite;
-        animation-name: heart;
+        transform: translateX(-50%);
+        animation: heartAnimation 1s ease-out forwards;
       }
 
-      @keyframes heart {
+      @keyframes heartAnimation {
         0% {
           transform: scale(1);
-          opacity: 1;
         }
 
         100% {
-          transform: scale(1.5);
-          opacity: 0;
+          transform: scale(0);
         }
       }
 
-      @keyframes slide-heart {
-        0% {
-          transform: translate(-50%, -50%) scale(0);
-        }
-
-        50% {
-          transform: translate(-50%, -50%) scale(1.2);
-        }
-
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-        }
+      #heartExplode {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
       }
     </style>
-    <script>
-      function showHeart() {
-        const heartContainer = document.getElementById("heart-container");
-        heartContainer.style.display = "flex";
-        const heart = document.getElementById("heart");
-        heart.classList.add("animate-heart");
-        const smallHearts = Array.from({
-          length: 20
-        }, (_, i) => {
-          const el = document.createElement("div");
-          el.classList.add("heart");
-          el.style.animationDelay = `${i * 50}ms`;
-          return el;
-        });
-        smallHearts.forEach(el => heartContainer.appendChild(el));
-        setTimeout(() => {
-          const text = document.getElementById("text");
-          text.style.display = "block";
-        }, 800);
-      }
-      document.addEventListener("DOMContentLoaded", () => {
-        const button = document.getElementById("love-button");
-        button.addEventListener("click", () => {
-          showHeart();
-          button.style.display = "none";
-        });
-      });
-    </script>
   </head>
   <body>
     <button id="loveButton" onclick="showLove()">Show Love</button>
@@ -126,51 +108,216 @@
     <script>
       function showLove() {
         var loveButton = document.getElementById("loveButton");
-        var heart = document.getElementById("heart");
-        var loveText = document.getElementById("loveText");
         var heartContainer = document.getElementById("heartContainer");
+        var loveText = document.getElementById("loveText");
         var heartExplode = document.getElementById("heartExplode");
         loveButton.style.display = "none";
-        heart.style.display = "block";
+        heartContainer.style.display = "block";
         var heartTop = document.getElementById("heartTop");
         var heartBottom = document.getElementById("heartBottom");
-        var topPos = 0;
-        var heartInterval = setInterval(frame, 10);
-
-        function frame() {
-          if (topPos == 200) {
-            clearInterval(heartInterval);
-            loveText.innerHTML = "I Love You!";
-            loveText.style.display = "block";
-            heartExplode.style.display = "block";
-            explodeHearts();
-          } else {
-            topPos++;
-            heartTop.style.top = topPos + 'px';
-            heartBottom.style.top = topPos + 'px';
+        heartTop.style.animation = "heartTopAnimation 0.5s ease-in-out forwards";
+        heartBottom.style.animation = "heartBottomAnimation 0.5s ease-in-out forwards";
+        setTimeout(function() {
+          loveText.style.display = "block";
+        }, 1000);
+        setTimeout(function() {
+          heartExplode.style.display = "block";
+          for (var i = 0; i < 30; i++) {
+            var heartParticle = document.createElement("div");
+            heartParticle.classList.add("heartParticle");
+            heartParticle.style.top = heart.offsetTop + "px";
+            heartParticle.style.left = heart.offsetLeft + "px";
+            heartExplode.appendChild(heartParticle);
           }
+          heart.style.display = "none";
+          loveText.style.top = heart.offsetTop + "px";
+          loveText.style.left = heart.offsetLeft + "px";
+        }, 2000);
+        setTimeout(function() {
+          heartExplode.style.display = "none";
+        }, 3000);
+      }
+    </script>
+    <style>
+      body {
+        background: linear-gradient(to bottom, #0a192f, #193549);
+      }
+
+      #loveButton {
+        width: 100px;
+        height: 50px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f15a5a;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      #heartContainer {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #heart {
+        width: 60px;
+        height: 60px;
+        position: relative;
+        transform: rotate(45deg);
+      }
+
+      #heartTop,
+      #heartBottom {
+        width: 60px;
+        height: 60px;
+        border-radius: 50% 50% 0 0;
+        background-color: #f15a5a;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #heartBottom {
+        transform: rotate(90deg);
+      }
+
+      #loveText {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+        color: white;
+        font-family: sans-serif;
+        text-align: center;
+        width: 100%;
+      }
+
+      #heartExplode {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .heartParticle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #f15a5a;
+        position: absolute;
+        animation: heartParticleAnimation 1s ease-out forwards;
+      }
+
+      @keyframes heartTopAnimation {
+        0% {
+          transform: rotate(45deg) scale(1);
+        }
+
+        50% {
+          transform: rotate(45deg) scale(1.2);
+        }
+
+        100% {
+          transform: rotate(45deg) scale(1);
+        }
+      }
+
+      @keyframes heartBottomAnimation {
+        0% {
+          transform: rotate(90deg) scale(1);
+        }
+
+        50% {
+          transform: rotate(90deg) scale(1.2);
+        }
+
+        100% {
+          transform: rotate(90deg) scale(1);
+        }
+      }
+
+      @keyframes heartParticleAnimation {
+        0% {
+          opacity: 1;
+          transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translate(calc(100vw * (Math.random() - 0.5)),
+              calc(100vh * (Math.random() - 0.5))) scale(1.5);
+        }
+      }
+
+      /* Mobile styles */
+      @media (max-width: 600px) {
+        #heart {
+          width: 40px;
+          height: 40px;
+        }
+
+        #heartTop,
+        #heartBottom {
+          width: 40px;
+          height: 40px;
+        }
+
+        #loveText {
+          font-size: 20px;
+        }
+
+        .heartParticle {
+          width: 5px;
+          height: 5px;
+        }
+      }
+    </style>
+    <body>
+      <button id="loveButton" onclick="showLove()">Show Love</button>
+      <div id="heartContainer">
+        <div id="heart">
+          <div id="heartTop"></div>
+          <div id="heartBottom"></div>
+        </div>
+        <div id="heartExplode"></div>
+      </div>
+      <div id="loveText">I Love You!!</div>
+      <script>
+        function showLove() {
+          // Hide the button
+          document.getElementById("loveButton").style.display = "none";
+          // Show the heart container
+          document.getElementById("heartContainer").style.display = "block";
+          // Animate the heart
+          var heart = document.getElementById("heart");
+          var heartTop = document.getElementById("heartTop");
+          var heartBottom = document.getElementById("heartBottom");
+          var loveText = document.getElementById("loveText");
+          heartTop.style.animation = "heartTopAnimation 1s ease-out forwards";
+          heartBottom.style.animation = "heartBottomAnimation 1s ease-out forwards";
+          setTimeout(function() {
+            loveText.style.display = "block";
+            heart.style.display = "none";
+            explodeHearts();
+          }, 1000);
         }
 
         function explodeHearts() {
-          for (var i = 0; i < 30; i++) {
-            var heart = document.createElement("DIV");
-            heart.className = "heartParticle";
-            heart.style.left = Math.floor(Math.random() * 90) + 'vw';
-            heart.style.top = Math.floor(Math.random() * 90) + 'vh';
-            heart.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg)';
-            heart.style.opacity = Math.random();
-            heartExplode.appendChild(heart);
-            setTimeout(function() {
-              heart.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg) translateY(' + Math.floor(Math.random() * 500 - 250) + 'px) translateX(' + Math.floor(Math.random() * 500 - 250) + 'px) scale(0)';
-              heart.style.opacity = 0;
-            }, 50);
-            setTimeout(function() {
-              heart.remove();
-            }, 1000);
+          var heartExplode = document.getElementById("heartExplode");
+          for (var i = 0; i < 20; i++) {
+            var heartParticle = document.createElement("div");
+            heartParticle.classList.add("heartParticle");
+            heartExplode.appendChild(heartParticle);
           }
+          heartExplode.style.display = "block";
         }
-      }
-    </script>
-  </body>
+      </script>
+    </body>
 </html>
-	
