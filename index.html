@@ -1,245 +1,151 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<title>i love you!!</title>	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<style>
-
-		body {
-
-			display: flex;
-
-			flex-direction: column;
-
-			align-items: center;
-
-			justify-content: center;
-
-			min-height: 100vh;
-
-			font-family: Arial, sans-serif;
-
-			font-size: 24px;
-
-			color: white;
-
-			background: linear-gradient(to bottom, #1e3c72, #2a5298);
-
-		}
-
-		#heart-container {
-
-			position: relative;
-
-			display: flex;
-
-			align-items: center;
-
-			justify-content: center;
-
-			width: 100%;
-
-			height: 100%;
-
-			opacity: 0;
-
-			animation: fade-in 1s forwards;
-
-		}
-
-		#heart {
-
-			position: absolute;
-
-			top: 50%;
-
-			left: 50%;
-
-			transform: translate(-50%, -50%) scale(0);
-
-			font-size: 200px;
-
-			color: red;
-
-			animation: slide 1s linear forwards;
-
-		}
-
-		#text {
-
-			display: none;
-
-			position: absolute;
-
-			top: calc(50% + 120px);
-
-			left: 50%;
-
-			transform: translateX(-50%);
-
-			font-size: 36px;
-
-		}
-
-		@keyframes slide {
-
-			0% {transform: translateX(-100%) scale(0);}
-
-			80% {transform: translate(-50%, -50%) scale(1.2);}
-
-			100% {transform: translate(-50%, -50%) scale(1);}
-
-		}
-
-		@keyframes fade-in {
-
-			0% {opacity: 0;}
-
-			100% {opacity: 1;}
-
-		}
-
-		@media screen and (max-width: 600px) {
-
-			body {
-
-				font-size: 16px;
-
-			}
-
-			#heart {
-
-				font-size: 100px;
-
-			}
-
-			#text {
-
-				font-size: 24px;
-
-				top: calc(50% + 60px);
-
-			}
-
-		}
-
-		.heart {
-
-			position: absolute;
-
-			top: 50%;
-
-			left: 50%;
-
-			transform: translate(-50%, -50%) scale(0);
-
-			font-size: 20px;
-
-			color: red;
-
-			animation: explode 1s ease-out;
-
-			animation-fill-mode: forwards;
-
-		}
-
-		@keyframes explode {
-
-			0% {transform: translate(-50%, -50%) scale(0);}
-
-			50% {transform: translate(-50%, -50%) scale(1.2);}
-
-			100% {transform: translate(-50%, -50%) scale(0);}
-
-		}
-
-	</style>
-	
-
-			function showHeart() {
-
-				const heartContainer = document.getElementById("heart-container");
-
-				heartContainer.style.display = "flex";
-
-	
-
-				const heart = document.getElementById("heart");
-
-				heart.classList.add("animate-heart");
-
-	
-
-				const smallHearts = Array.from({length: 20}, (_, i) => {
-
-					const el = document.createElement("div");
-
-					el.classList.add("heart");
-
-					el.style.animationDelay = `${i * 50}ms`;
-
-					return el;
-
-				});
-
-	
-
-				smallHearts.forEach(el => heartContainer.appendChild(el));
-
-	
-
-				setTimeout(() => {
-
-					const text = document.getElementById("text");
-
-					text.style.display = "block";
-
-				}, 800);
-
-			}
-
-	
-
-			document.addEventListener("DOMContentLoaded", () => {
-
-				const button = document.getElementById("love-button");
-
-				button.addEventListener("click", () => {
-
-					showHeart();
-
-	
-
-					button.style.display = "none";
-
-				});
-
-			});
-
-		</script>
-
-	</head>
-
-	<body>
-
-		<button id="love-button">Love me</button>
-
-		<div id="heart-container">
-
-			<div id="heart">❤️</div>
-
-			<div id="text">I love you!!</div>
-
-		</div>
-
-	</body>
-
+  <head>
+    <title>i love you!!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        color: white;
+        background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      }
+
+      #heart-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        animation: fade-in 1s forwards;
+      }
+
+      #heart {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 200px;
+        color: red;
+        animation: slide 1s linear forwards;
+      }
+
+      #text {
+        display: none;
+        position: absolute;
+        top: calc(50% + 120px);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 36px;
+      }
+
+      @keyframes slide {
+        0% {
+          transform: translateX(-100%) scale(0);
+        }
+
+        80% {
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        body {
+          font-size: 16px;
+        }
+
+        #heart {
+          font-size: 100px;
+        }
+
+        #text {
+          font-size: 24px;
+          top: calc(50% + 60px);
+        }
+      }
+
+      .heart {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 20px;
+        color: red;
+        animation: explode 1s ease-out;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes explode {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        100% {
+          transform: translate(-50%, -50%) scale(0);
+        }
+      }
+    </style>
+    <script>
+      function showHeart() {
+        const heartContainer = document.getElementById("heart-container");
+        heartContainer.style.display = "flex";
+        const heart = document.getElementById("heart");
+        heart.classList.add("animate-heart");
+        const smallHearts = Array.from({
+          length: 20
+        }, (_, i) => {
+          const el = document.createElement("div");
+          el.classList.add("heart");
+          el.style.animationDelay = `${i * 50}ms`;
+          return el;
+        });
+        smallHearts.forEach(el => heartContainer.appendChild(el));
+        setTimeout(() => {
+          const text = document.getElementById("text");
+          text.style.display = "block";
+        }, 800);
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("love-button");
+        button.addEventListener("click", () => {
+          showHeart();
+          button.style.display = "none";
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="love-button">Love me</button>
+    <div id="heart-container">
+      <div id="heart">❤️</div>
+      <div id="text">I love you!!</div>
+    </div>
+  </body>
 </html>
-			
-
-		
 
 	
