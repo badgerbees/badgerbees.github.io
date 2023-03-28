@@ -1,106 +1,167 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title><3</title>
-	<style>
-		#heart {
-			display: none;
-			position: absolute;
-			top: 50%;
-			left: -50px;
-			transform: translate(-50%, -50%);
-			width: 100px;
-			height: 100px;
-			z-index: 1;
-			animation: slide-in 1s ease forwards;
-		}
-		#heart::before,
-		#heart::after {
-			content: '';
-			position: absolute;
-			width: 50px;
-			height: 80px;
-			background-color: red;
-			border-radius: 50px 50px 0 0;
-			transform: rotate(-45deg);
-			transform-origin: 0 100%;
-			top: -40px;
-			left: 25px;
-		}
-		#heart::after {
-			transform: rotate(45deg);
-			transform-origin: 100% 100%;
-			left: 0;
-		}
-		#heart::before {
-			background-color: red;
-			border-radius: 50px 50px 0 0;
-			transform: translateX(-10px) rotate(-45deg);
-		}
-		#heart::after {
-			background-color: red;
-			border-radius: 50px 50px 0 0;
-			transform: translateX(10px) rotate(45deg);
-		}
-		#heart::before,
-		#heart::after,
-		#heart div {
-			position: absolute;
-			height: 80px;
-			width: 25px;
-			background-color: red;
-			border-radius: 12.5px 12.5px 0 0;
-			top: 0;
-		}
-		#heart div.left {
-			transform: rotate(-45deg);
-			left: -12.5px;
-		}
-		#heart div.right {
-			transform: rotate(45deg);
-			right: -12.5px;
-		}
-		#heart div.bottom {
-			transform: rotate(90deg);
-			left: 50%;
-			margin-left: -12.5px;
-			top: 10px;
-		}
-		#message {
-			display: none;
-			position: absolute;
-			top: 60%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			font-size: 24px;
-			font-weight: bold;
-			z-index: 2;
-		}
-		@keyframes slide-in {
-			0% {
-				left: -50px;
-			}
-			100% {
-				left: 50%;
-			}
-		}
-	</style>
-</head>
-<body>
-	<button onclick="showHeart()">Click me!</button>
-	<div id="heart">
-		<div class="left"></div>
-		<div class="right"></div>
-		<div class="bottom"></div>
-	</div>
-	<div id="message"></div>
-	<script>
-		function showHeart() {
-			document.querySelector('button').style.display = 'none';
-			document.querySelector('#heart').style.display = 'block';
-			document.querySelector('#message').style.display = 'block';
-			document.querySelector('#message').innerHTML = 'I love you!!';
-		}
-	</script>
-</body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Button</title>
+    <style>
+      #heart {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: -50px;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        z-index: 1;
+        animation: slide-in 1s ease forwards;
+      }
+
+      #heart::before,
+      #heart::after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 80px;
+        background-color: red;
+        border-radius: 50px 50px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        top: -40px;
+        left: 25px;
+      }
+
+      #heart::after {
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+        left: 0;
+      }
+
+      #heart::before {
+        background-color: red;
+        border-radius: 50px 50px 0 0;
+        transform: translateX(-10px) rotate(-45deg);
+      }
+
+      #heart::after {
+        background-color: red;
+        border-radius: 50px 50px 0 0;
+        transform: translateX(10px) rotate(45deg);
+      }
+
+      #heart::before,
+      #heart::after,
+      #heart div {
+        position: absolute;
+        height: 80px;
+        width: 25px;
+        background-color: red;
+        border-radius: 12.5px 12.5px 0 0;
+        top: 0;
+      }
+
+      #heart div.left {
+        transform: rotate(-45deg);
+        left: -12.5px;
+      }
+
+      #heart div.right {
+        transform: rotate(45deg);
+        right: -12.5px;
+      }
+
+      #heart div.bottom {
+        transform: rotate(90deg);
+        left: 50%;
+        margin-left: -12.5px;
+        top: 10px;
+      }
+
+      #message {
+        display: none;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 2;
+      }
+
+      @keyframes slide-in {
+        0% {
+          left: -50px;
+        }
+
+        100% {
+          left: 50%;
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
+        #heart {
+          width: 50px;
+          height: 50px;
+        }
+
+        #heart::before,
+        #heart::after {
+          width: 25px;
+          height: 40px;
+          top: -20px;
+          left: 12.5px;
+        }
+
+        #heart::before {
+          transform: translateX(-5px) rotate(-45deg);
+        }
+
+        #heart::after {
+          transform: translateX(5px) rotate(45deg);
+        }
+
+        #heart::before,
+        #heart::after,
+        #heart div {
+          height: 40px;
+          width: 12.5px;
+        }
+
+        #heart div.left {
+          left: -6.25px;
+        }
+
+        #heart div.right {
+          right: -6.25px;
+        }
+
+        #heart div.bottom {
+          margin-left: -6.25px;
+          top: 5px;
+        }
+
+        #message {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="showHeart()">Click me!</button>
+    <div id="heart">
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="bottom"></div>
+    </div>
+    <div id="message">I love you!!</div>
+    <script>
+      function showHeart() {
+        var button = document.querySelector('button');
+        var heart = document.querySelector('#heart');
+        var message = document.querySelector('#message');
+        button.style.display = 'none';
+        heart.style.display = 'block';
+        message.style.display = 'block';
+      }
+    </script>
+  </body>
 </html>
