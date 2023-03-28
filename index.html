@@ -1,102 +1,76 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>i love you!!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Animated Heart</title>
     <style>
       body {
+        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+        color: #fff;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        min-height: 100vh;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
         font-family: Arial, sans-serif;
+      }
+
+      button {
+        background-color: #fff;
+        color: #000;
+        border: none;
+        padding: 12px 24px;
         font-size: 24px;
-        color: white;
-        background: linear-gradient(to bottom, #1e3c72, #2a5298);
+        cursor: pointer;
+        border-radius: 10px;
       }
 
       #heart-container {
-        position: relative;
-        display: flex;
+        display: none;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        animation: fade-in 1s forwards;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
       }
 
       #heart {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        font-size: 200px;
-        color: red;
-        animation: slide 1s linear forwards;
+        font-size: 120px;
+        animation: slide-heart 1.5s forwards ease-out;
       }
 
       #text {
         display: none;
-        position: absolute;
-        top: calc(50% + 120px);
-        left: 50%;
-        transform: translateX(-50%);
         font-size: 36px;
-      }
-
-      @keyframes slide {
-        0% {
-          transform: translateX(-100%) scale(0);
-        }
-
-        80% {
-          transform: translate(-50%, -50%) scale(1.2);
-        }
-
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
-
-      @keyframes fade-in {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      @media screen and (max-width: 600px) {
-        body {
-          font-size: 16px;
-        }
-
-        #heart {
-          font-size: 100px;
-        }
-
-        #text {
-          font-size: 24px;
-          top: calc(50% + 60px);
-        }
+        margin-top: 50px;
       }
 
       .heart {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        font-size: 20px;
-        color: red;
-        animation: explode 1s ease-out;
-        animation-fill-mode: forwards;
+        display: block;
+        width: 10px;
+        height: 10px;
+        background-color: #fff;
+        border-radius: 50%;
+        animation: animate 1.5s linear infinite;
+        animation-name: heart;
       }
 
-      @keyframes explode {
+      @keyframes heart {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      @keyframes slide-heart {
         0% {
           transform: translate(-50%, -50%) scale(0);
         }
@@ -106,7 +80,7 @@
         }
 
         100% {
-          transform: translate(-50%, -50%) scale(0);
+          transform: translate(-50%, -50%) scale(1);
         }
       }
     </style>
@@ -140,12 +114,63 @@
     </script>
   </head>
   <body>
-    <button id="love-button">Love me</button>
-    <div id="heart-container">
-      <div id="heart">❤️</div>
-      <div id="text">I love you!!</div>
+    <button id="loveButton" onclick="showLove()">Show Love</button>
+    <div id="heartContainer">
+      <div id="heart">
+        <div class="heartPart" id="heartTop"></div>
+        <div class="heartPart" id="heartBottom"></div>
+      </div>
+      <div id="loveText"></div>
+      <div id="heartExplode"></div>
     </div>
+    <script>
+      function showLove() {
+        var loveButton = document.getElementById("loveButton");
+        var heart = document.getElementById("heart");
+        var loveText = document.getElementById("loveText");
+        var heartContainer = document.getElementById("heartContainer");
+        var heartExplode = document.getElementById("heartExplode");
+        loveButton.style.display = "none";
+        heart.style.display = "block";
+        var heartTop = document.getElementById("heartTop");
+        var heartBottom = document.getElementById("heartBottom");
+        var topPos = 0;
+        var heartInterval = setInterval(frame, 10);
+
+        function frame() {
+          if (topPos == 200) {
+            clearInterval(heartInterval);
+            loveText.innerHTML = "I Love You!";
+            loveText.style.display = "block";
+            heartExplode.style.display = "block";
+            explodeHearts();
+          } else {
+            topPos++;
+            heartTop.style.top = topPos + 'px';
+            heartBottom.style.top = topPos + 'px';
+          }
+        }
+
+        function explodeHearts() {
+          for (var i = 0; i < 30; i++) {
+            var heart = document.createElement("DIV");
+            heart.className = "heartParticle";
+            heart.style.left = Math.floor(Math.random() * 90) + 'vw';
+            heart.style.top = Math.floor(Math.random() * 90) + 'vh';
+            heart.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg)';
+            heart.style.opacity = Math.random();
+            heartExplode.appendChild(heart);
+            setTimeout(function() {
+              heart.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg) translateY(' + Math.floor(Math.random() * 500 - 250) + 'px) translateX(' + Math.floor(Math.random() * 500 - 250) + 'px) scale(0)';
+              heart.style.opacity = 0;
+            }, 50);
+            setTimeout(function() {
+              heart.remove();
+            }, 1000);
+          }
+        }
+      }
+    </script>
   </body>
 </html>
-
 	
