@@ -1,109 +1,44 @@
-  <head>
-    <title>Heart Animation</title>
-    <style>
-      body {
-        background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: white;
-      }
-
-      #loveButton {
-        background-color: white;
-        color: #1a2a6c;
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        outline: none;
-      }
-
-      #heartContainer {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: none;
-      }
-
-      #heart {
-        width: 50px;
-        height: 50px;
-        position: relative;
-        animation: heartAnimation 1s ease-out forwards;
-      }
-
-      #heartTop,
-      #heartBottom {
-        position: absolute;
-        background-color: white;
-        border-radius: 50px 50px 0 0;
-      }
-
-      #heartTop {
-        width: 50px;
-        height: 25px;
-        top: 0;
-        left: 0;
-        transform: rotate(-45deg);
-      }
-
-      #heartBottom {
-        width: 50px;
-        height: 25px;
-        top: 25px;
-        left: 0;
-        transform: rotate(45deg);
-      }
-
-      #loveText {
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2rem;
-        display: none;
-      }
-
-      @keyframes heartAnimation {
-        0% {
-          transform: scale(0);
-        }
-
-        50% {
-          transform: scale(1.2);
-        }
-
-        100% {
-          transform: scale(1);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <button id="loveButton" onclick="showLove()">Show Love</button>
-    <div id="heartContainer">
-      <div id="heart">
-        <div id="heartTop"></div>
-        <div id="heartBottom"></div>
-      </div>
-    </div>
-    <div id="loveText">I Love You!!</div>
-    <script>
-      function showLove() {
-        // Hide the button
-        document.getElementById("loveButton").style.display = "none";
-        // Show the heart container
-        document.getElementById("heartContainer").style.display = "block";
-        // Animate the heart
-        var loveText = document.getElementById("loveText");
-        loveText.style.display = "block";
-      }
-    </script>
-  </body>
+<!DOCTYPE html>
+<html>
+<head>
+	<title><3</title>
+	<style>
+		#heart {
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100px;
+			height: 100px;
+			background-image: url('https://cdn.pixabay.com/photo/2018/01/29/21/01/heart-3118745_1280.png');
+			background-size: contain;
+			background-repeat: no-repeat;
+			z-index: 1;
+		}
+		#message {
+			display: none;
+			position: absolute;
+			top: 60%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 24px;
+			font-weight: bold;
+			z-index: 2;
+		}
+	</style>
+</head>
+<body>
+	<button onclick="showHeart()">Click me!</button>
+	<div id="heart"></div>
+	<div id="message"></div>
+	<script>
+		function showHeart() {
+			document.querySelector('button').style.display = 'none';
+			document.querySelector('#heart').style.display = 'block';
+			document.querySelector('#message').style.display = 'block';
+			document.querySelector('#message').innerHTML = 'I love you!!';
+		}
+	</script>
+</body>
 </html>
