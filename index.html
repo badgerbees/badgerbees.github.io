@@ -1,97 +1,87 @@
-<!DOCTYPE html>
-<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Animated Heart</title>
+    <title>Heart Animation</title>
     <style>
       body {
-        background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-        color: #fff;
+        background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
         margin: 0;
         font-family: Arial, sans-serif;
+        color: white;
       }
 
-      button {
-        padding: 20px;
-        background-color: #F08080;
-        color: #fff;
-        font-size: 24px;
-        border-radius: 10px;
+      #loveButton {
+        background-color: white;
+        color: #1a2a6c;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
         border: none;
-        outline: none;
+        border-radius: 50px;
         cursor: pointer;
+        outline: none;
       }
 
       #heartContainer {
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         display: none;
       }
 
       #heart {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        display: none;
+        width: 50px;
+        height: 50px;
+        position: relative;
+        animation: heartAnimation 1s ease-out forwards;
       }
 
-      .heartPart {
+      #heartTop,
+      #heartBottom {
         position: absolute;
-        background-color: #F08080;
-        width: 50px;
-        height: 80px;
+        background-color: white;
         border-radius: 50px 50px 0 0;
-        transform: rotate(-45deg);
-        transform-origin: 0 100%;
-        transition: all 0.5s ease-in-out;
       }
 
       #heartTop {
-        top: -20px;
+        width: 50px;
+        height: 25px;
+        top: 0;
+        left: 0;
+        transform: rotate(-45deg);
       }
 
       #heartBottom {
-        top: 30px;
+        width: 50px;
+        height: 25px;
+        top: 25px;
+        left: 0;
+        transform: rotate(45deg);
       }
 
       #loveText {
-        text-align: center;
-        margin-top: 20px;
-        display: none;
-      }
-
-      .heartParticle {
         position: absolute;
-        background-color: #F08080;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        transform: translateX(-50%);
-        animation: heartAnimation 1s ease-out forwards;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        display: none;
       }
 
       @keyframes heartAnimation {
         0% {
-          transform: scale(1);
+          transform: scale(0);
+        }
+
+        50% {
+          transform: scale(1.2);
         }
 
         100% {
-          transform: scale(0);
+          transform: scale(1);
         }
-      }
-
-      #heartExplode {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9999;
       }
     </style>
   </head>
@@ -99,225 +89,21 @@
     <button id="loveButton" onclick="showLove()">Show Love</button>
     <div id="heartContainer">
       <div id="heart">
-        <div class="heartPart" id="heartTop"></div>
-        <div class="heartPart" id="heartBottom"></div>
+        <div id="heartTop"></div>
+        <div id="heartBottom"></div>
       </div>
-      <div id="loveText"></div>
-      <div id="heartExplode"></div>
     </div>
+    <div id="loveText">I Love You!!</div>
     <script>
       function showLove() {
-        var loveButton = document.getElementById("loveButton");
-        var heartContainer = document.getElementById("heartContainer");
+        // Hide the button
+        document.getElementById("loveButton").style.display = "none";
+        // Show the heart container
+        document.getElementById("heartContainer").style.display = "block";
+        // Animate the heart
         var loveText = document.getElementById("loveText");
-        var heartExplode = document.getElementById("heartExplode");
-        loveButton.style.display = "none";
-        heartContainer.style.display = "block";
-        var heartTop = document.getElementById("heartTop");
-        var heartBottom = document.getElementById("heartBottom");
-        heartTop.style.animation = "heartTopAnimation 0.5s ease-in-out forwards";
-        heartBottom.style.animation = "heartBottomAnimation 0.5s ease-in-out forwards";
-        setTimeout(function() {
-          loveText.style.display = "block";
-        }, 1000);
-        setTimeout(function() {
-          heartExplode.style.display = "block";
-          for (var i = 0; i < 30; i++) {
-            var heartParticle = document.createElement("div");
-            heartParticle.classList.add("heartParticle");
-            heartParticle.style.top = heart.offsetTop + "px";
-            heartParticle.style.left = heart.offsetLeft + "px";
-            heartExplode.appendChild(heartParticle);
-          }
-          heart.style.display = "none";
-          loveText.style.top = heart.offsetTop + "px";
-          loveText.style.left = heart.offsetLeft + "px";
-        }, 2000);
-        setTimeout(function() {
-          heartExplode.style.display = "none";
-        }, 3000);
+        loveText.style.display = "block";
       }
     </script>
-    <style>
-      body {
-        background: linear-gradient(to bottom, #0a192f, #193549);
-      }
-
-      #loveButton {
-        width: 100px;
-        height: 50px;
-        border: none;
-        border-radius: 5px;
-        background-color: #f15a5a;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-      }
-
-      #heartContainer {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      #heart {
-        width: 60px;
-        height: 60px;
-        position: relative;
-        transform: rotate(45deg);
-      }
-
-      #heartTop,
-      #heartBottom {
-        width: 60px;
-        height: 60px;
-        border-radius: 50% 50% 0 0;
-        background-color: #f15a5a;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-
-      #heartBottom {
-        transform: rotate(90deg);
-      }
-
-      #loveText {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 30px;
-        color: white;
-        font-family: sans-serif;
-        text-align: center;
-        width: 100%;
-      }
-
-      #heartExplode {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .heartParticle {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #f15a5a;
-        position: absolute;
-        animation: heartParticleAnimation 1s ease-out forwards;
-      }
-
-      @keyframes heartTopAnimation {
-        0% {
-          transform: rotate(45deg) scale(1);
-        }
-
-        50% {
-          transform: rotate(45deg) scale(1.2);
-        }
-
-        100% {
-          transform: rotate(45deg) scale(1);
-        }
-      }
-
-      @keyframes heartBottomAnimation {
-        0% {
-          transform: rotate(90deg) scale(1);
-        }
-
-        50% {
-          transform: rotate(90deg) scale(1.2);
-        }
-
-        100% {
-          transform: rotate(90deg) scale(1);
-        }
-      }
-
-      @keyframes heartParticleAnimation {
-        0% {
-          opacity: 1;
-          transform: translate(0, 0) scale(1);
-        }
-
-        100% {
-          opacity: 0;
-          transform: translate(calc(100vw * (Math.random() - 0.5)),
-              calc(100vh * (Math.random() - 0.5))) scale(1.5);
-        }
-      }
-
-      /* Mobile styles */
-      @media (max-width: 600px) {
-        #heart {
-          width: 40px;
-          height: 40px;
-        }
-
-        #heartTop,
-        #heartBottom {
-          width: 40px;
-          height: 40px;
-        }
-
-        #loveText {
-          font-size: 20px;
-        }
-
-        .heartParticle {
-          width: 5px;
-          height: 5px;
-        }
-      }
-    </style>
-    <body>
-      <button id="loveButton" onclick="showLove()">Show Love</button>
-      <div id="heartContainer">
-        <div id="heart">
-          <div id="heartTop"></div>
-          <div id="heartBottom"></div>
-        </div>
-        <div id="heartExplode"></div>
-      </div>
-      <div id="loveText">I Love You!!</div>
-      <script>
-        function showLove() {
-          // Hide the button
-          document.getElementById("loveButton").style.display = "none";
-          // Show the heart container
-          document.getElementById("heartContainer").style.display = "block";
-          // Animate the heart
-          var heart = document.getElementById("heart");
-          var heartTop = document.getElementById("heartTop");
-          var heartBottom = document.getElementById("heartBottom");
-          var loveText = document.getElementById("loveText");
-          heartTop.style.animation = "heartTopAnimation 1s ease-out forwards";
-          heartBottom.style.animation = "heartBottomAnimation 1s ease-out forwards";
-          setTimeout(function() {
-            loveText.style.display = "block";
-            heart.style.display = "none";
-            explodeHearts();
-          }, 1000);
-        }
-
-        function explodeHearts() {
-          var heartExplode = document.getElementById("heartExplode");
-          for (var i = 0; i < 20; i++) {
-            var heartParticle = document.createElement("div");
-            heartParticle.classList.add("heartParticle");
-            heartExplode.appendChild(heartParticle);
-          }
-          heartExplode.style.display = "block";
-        }
-      </script>
-    </body>
+  </body>
 </html>
