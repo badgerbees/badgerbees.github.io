@@ -30,11 +30,27 @@
 
 		}
 
-		
+		#heart-container {
+
+			position: relative;
+
+			display: flex;
+
+			align-items: center;
+
+			justify-content: center;
+
+			width: 100%;
+
+			height: 100%;
+
+			opacity: 0;
+
+			animation: fade-in 1s forwards;
+
+		}
 
 		#heart {
-
-			display: none;
 
 			position: absolute;
 
@@ -42,27 +58,49 @@
 
 			left: 50%;
 
-			transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%) scale(0);
 
 			font-size: 200px;
 
 			color: red;
 
-			animation: slide 2s linear;
+			animation: slide 1s linear forwards;
 
 		}
 
-		
+		#text {
+
+			display: none;
+
+			position: absolute;
+
+			top: calc(50% + 120px);
+
+			left: 50%;
+
+			transform: translateX(-50%);
+
+			font-size: 36px;
+
+		}
 
 		@keyframes slide {
 
-			0% {transform: translateX(-100%);}
+			0% {transform: translateX(-100%) scale(0);}
 
-			100% {transform: translate(-50%, -50%);}
+			80% {transform: translate(-50%, -50%) scale(1.2);}
+
+			100% {transform: translate(-50%, -50%) scale(1);}
 
 		}
 
-		
+		@keyframes fade-in {
+
+			0% {opacity: 0;}
+
+			100% {opacity: 1;}
+
+		}
 
 		@media screen and (max-width: 600px) {
 
@@ -78,34 +116,130 @@
 
 			}
 
+			#text {
+
+				font-size: 24px;
+
+				top: calc(50% + 60px);
+
+			}
+
+		}
+
+		.heart {
+
+			position: absolute;
+
+			top: 50%;
+
+			left: 50%;
+
+			transform: translate(-50%, -50%) scale(0);
+
+			font-size: 20px;
+
+			color: red;
+
+			animation: explode 1s ease-out;
+
+			animation-fill-mode: forwards;
+
+		}
+
+		@keyframes explode {
+
+			0% {transform: translate(-50%, -50%) scale(0);}
+
+			50% {transform: translate(-50%, -50%) scale(1.2);}
+
+			100% {transform: translate(-50%, -50%) scale(0);}
+
 		}
 
 	</style>
+	
 
-	<script>
+			function showHeart() {
 
-		function showHeart() {
+				const heartContainer = document.getElementById("heart-container");
 
-			document.getElementById("heart").style.display = "block";
+				heartContainer.style.display = "flex";
 
-			document.getElementById("button").style.display = "none";
+	
 
-			document.getElementById("text").style.display = "block";
+				const heart = document.getElementById("heart");
 
-		}
+				heart.classList.add("animate-heart");
 
-	</script>
+	
 
-</head>
+				const smallHearts = Array.from({length: 20}, (_, i) => {
 
-<body>
+					const el = document.createElement("div");
 
-	<button id="button" onclick="showHeart()">Click me!</button>
+					el.classList.add("heart");
 
-	<div id="heart">&hearts;</div>
+					el.style.animationDelay = `${i * 50}ms`;
 
-	<div id="text" style="display: none;">I love you!!</div>
+					return el;
 
-</body>
+				});
+
+	
+
+				smallHearts.forEach(el => heartContainer.appendChild(el));
+
+	
+
+				setTimeout(() => {
+
+					const text = document.getElementById("text");
+
+					text.style.display = "block";
+
+				}, 800);
+
+			}
+
+	
+
+			document.addEventListener("DOMContentLoaded", () => {
+
+				const button = document.getElementById("love-button");
+
+				button.addEventListener("click", () => {
+
+					showHeart();
+
+	
+
+					button.style.display = "none";
+
+				});
+
+			});
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<button id="love-button">Love me</button>
+
+		<div id="heart-container">
+
+			<div id="heart">❤️</div>
+
+			<div id="text">I love you!!</div>
+
+		</div>
+
+	</body>
 
 </html>
+			
+
+		
+
+	
