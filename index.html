@@ -1,54 +1,111 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-	<title>love you</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>i love you!!</title>	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<style>
+
 		body {
+
 			display: flex;
+
 			flex-direction: column;
+
 			align-items: center;
+
 			justify-content: center;
+
 			min-height: 100vh;
+
 			font-family: Arial, sans-serif;
+
 			font-size: 24px;
+
 			color: white;
+
 			background: linear-gradient(to bottom, #1e3c72, #2a5298);
+
 		}
+
 		
+
 		#heart {
+
 			display: none;
+
 			position: absolute;
-			top: 0;
-			left: 0;
-			font-size: 100px;
+
+			top: 50%;
+
+			left: 50%;
+
+			transform: translate(-50%, -50%);
+
+			font-size: 200px;
+
 			color: red;
+
 			animation: slide 2s linear;
+
 		}
+
 		
+
 		@keyframes slide {
+
 			0% {transform: translateX(-100%);}
-			100% {transform: translateX(0);}
+
+			100% {transform: translate(-50%, -50%);}
+
 		}
+
 		
+
 		@media screen and (max-width: 600px) {
+
 			body {
+
 				font-size: 16px;
+
 			}
+
 			#heart {
-				font-size: 60px;
+
+				font-size: 100px;
+
 			}
+
 		}
+
 	</style>
+
 	<script>
+
 		function showHeart() {
+
 			document.getElementById("heart").style.display = "block";
+
+			document.getElementById("button").style.display = "none";
+
+			document.getElementById("text").style.display = "block";
+
 		}
+
 	</script>
+
 </head>
+
 <body>
-	<button onclick="showHeart()">Click me!</button>
+
+	<button id="button" onclick="showHeart()">Click me!</button>
+
 	<div id="heart">&hearts;</div>
-	<div>I love you!!</div>
+
+	<div id="text" style="display: none;">I love you!!</div>
+
 </body>
+
 </html>
