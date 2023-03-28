@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><3</title>
+	<title>Heart Button</title>
 	<style>
 		#heart {
 			display: none;
@@ -11,10 +11,35 @@
 			transform: translate(-50%, -50%);
 			width: 100px;
 			height: 100px;
-			background-image: url('https://cdn.pixabay.com/photo/2018/01/29/21/01/heart-3118745_1280.png');
-			background-size: contain;
-			background-repeat: no-repeat;
 			z-index: 1;
+		}
+		#heart::before,
+		#heart::after {
+			content: '';
+			position: absolute;
+			width: 60px;
+			height: 90px;
+			background-color: red;
+			border-radius: 30px 30px 0 0;
+			transform: rotate(-45deg);
+			transform-origin: 0 100%;
+			top: -45px;
+			left: 20px;
+		}
+		#heart::after {
+			transform: rotate(45deg);
+			transform-origin: 100% 100%;
+			left: 0;
+		}
+		#heart::before {
+			background-color: red;
+			border-radius: 30px 30px 0 0;
+			transform: translateX(-15px) rotate(-45deg);
+		}
+		#heart::after {
+			background-color: red;
+			border-radius: 30px 30px 0 0;
+			transform: translateX(15px) rotate(45deg);
 		}
 		#message {
 			display: none;
