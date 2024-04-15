@@ -140,22 +140,25 @@
     }
 
     squares.forEach(square => {
-      square.addEventListener('click', () => {
-        if (turn === 'X' && square.textContent === '') {
-          square.textContent = turn;
-          if (!checkWinner() && !checkTie()) {
-            turn = ai;
-            const aiMove = bestMove();
-            if (aiMove !== -1) {
-              squares[aiMove].textContent = ai;
-            }
-            turn = 'X'; // Switch turn back to player after AI move
-          }
-          checkWinner();
-          checkTie();
+  square.addEventListener('click', () => {
+    if (turn === 'X' && square.textContent === '') {
+      square.textContent = turn;
+      if (!checkWinner() && !checkTie()) {
+        turn = ai;
+        const aiMove = bestMove();
+        if (aiMove !== -1) {
+          squares[aiMove].textContent = ai;
         }
-      });
-    });
+        turn = 'X'; // Switch turn back to player after AI move
+      }
+      checkWinner();
+      checkTie();
+      // Added return statement here
+      return;
+    }
+  });
+});
+
   </script>
 </body>
 </html>
