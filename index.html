@@ -43,6 +43,7 @@
     const squares = document.querySelectorAll('.square');
     const message = document.getElementById('message');
     let turn = 'X';
+    const ai = 'O';
 
     const winningConditions = [
       [0, 1, 2],
@@ -78,12 +79,78 @@
       }
     }
 
+    function bestMove() {
+      // Check for winning move for AI
+      for (let i = 0; i < winningConditions.length; i++) {
+        const condition = winningConditions[i];
+        const a = squares[condition[0]].textContent;
+        const b = squares[condition[1]].textContent;
+        const c = squares[condition[2]].textContent;
+  
+        // If two squares are filled with AI's mark and one is empty, place AI's mark in the empty one
+        if (a === ai && b === ai && c === '') {
+          return condition[2];
+        } else if (a === '' && b === ai && c === ai) {
+          return condition[0];
+        } else if (a === ai && b === '' && c === ai) {
+          return condition[1];
+        }
+      }
+  
+      // Check for blocking player's winning move
+      for (let i = 0; i < winningConditions.length; i++) {
+        const condition = winningConditions[i];
+        const a = squares[condition[0]].textContent;
+        const b = squares[condition[1]].textContent;
+        const c = squares[condition[2]].textContent;
+
+                 // If two squares are filled with player's mark and one is empty, place AI's mark in the empty one to block
+        if (a === turn && b === turn && c === '') {
+          return condition[2];
+        } else if (a === '' && b === turn && c === turn) {
+          return condition[0];
+        } else if (a === turn && b === '' && c === turn) {
+          return condition[1];
+        }
+      }
+
+      // Choose the center square if available
+      if (squares[4].textContent === '') {
+        return 4;
+      }
+
+      // Choose an empty corner square if available
+      const corners = [0, 2, 6, 8];
+      for (let corner of corners) {
+        if (squares[corner].textContent === '') {
+          return corner;
+        }
+      }
+
+      // Choose an empty edge square if available
+      const edges = [1, 3, 5, 7];
+      for (let edge of edges) {
+        if (squares[edge].textContent === '') {
+          return edge;
+        }
+      }
+
+      // No good moves left, return -1 (shouldn't happen)
+      return -1;
+    }
+
     squares.forEach(square => {
       square.addEventListener('click', () => {
-        if (square.textContent === '') {
+        if (turn === 'X' && square.textContent === '') {
           square.textContent = turn;
-          turn = turn === 'X' ? 'O' : 'X';
-          message.textContent = `Next Player: ${turn}`;
+          if (!checkWinner() && !checkTie()) {
+            turn = ai;
+            const aiMove = bestMove();
+            if (aiMove !== -1) {
+              squares[aiMove].textContent = ai;
+            }
+            turn = 'X'; // Switch turn back to player after AI move
+          }
           checkWinner();
           checkTie();
         }
@@ -91,5 +158,6 @@
     });
   </script>
 </body>
-  </html>
-  
+</html>
+
+    
