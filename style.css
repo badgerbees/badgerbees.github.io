@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+h1 {
+    color: #ff6b9d;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.magic-btn {
+    background: linear-gradient(45deg, #ff6b9d, #c44569);
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.magic-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+.magic-btn:active {
+    transform: translateY(-1px);
+}
+
+.flower-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.flower {
+    position: absolute;
+    font-size: 2rem;
+    animation: fallAndSpin 4s linear forwards;
+    opacity: 0;
+}
+
+@keyframes fallAndSpin {
+    0% {
+        opacity: 1;
+        transform: translateY(-50px) rotate(0deg) scale(0.5);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0px) rotate(36deg) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(100vh) rotate(360deg) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg) scale(0.5);
+    }
+}
+
+.cat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transition: all 0.5s ease;
+    z-index: 5;
+}
+
+.cat-container.hidden {
+    opacity: 0;
+    transform: translateY(100px) scale(0.5);
+}
+
+.cat-container:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    animation: bounce 0.8s ease-out;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(100px) scale(0.5); }
+    50% { transform: translateY(-10px) scale(1.1); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.orange-cat {
+    position: relative;
+    animation: sway 3s ease-in-out infinite;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+
+.cat-head {
+    width: 80px;
+    height: 70px;
+    background: linear-gradient(45deg, #ff8c42, #ff6b1a);
+    border-radius: 50% 50% 45% 45%;
+    position: relative;
+    margin: 0 auto 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.cat-ears {
+    position: absolute;
+    top: -15px;
+    width: 100%;
+}
+
+.ear {
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(45deg, #ff8c42, #ff6b1a);
+    border-radius: 50% 50% 0 50%;
+    position: absolute;
+}
+
+.left-ear {
+    left: 10px;
+    transform: rotate(-30deg);
+}
+
+.right-ear {
+    right: 10px;
+    transform: rotate(30deg);
+}
+
+.ear::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #ff4757;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cat-face {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.eye {
+    width: 8px;
+    height: 12px;
+    background: #2c2c54;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    animation: blink 4s infinite;
+}
+
+@keyframes blink {
+    0%, 90%, 100% { height: 12px; }
+    95% { height: 2px; }
+}
+
+.left-eye {
+    left: 15px;
+}
+
+.right-eye {
+    right: 15px;
+}
+
+.nose {
+    width: 6px;
+    height: 5px;
+    background: #ff4757;
+    border-radius: 50% 50% 50% 50%;
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.mouth {
+    width: 20px;
+    height: 10px;
+    border: 2px solid #2c2c54;
+    border-top: none;
+    border-radius: 0 0 50% 50%;
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cat-torso {
+    width: 60px;
+    height: 50px;
+    background: linear-gradient(45deg, #ff8c42, #ff6b1a);
+    border-radius: 30px 30px 20px 20px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.cat-legs {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+    padding: 0 10px;
+}
+
+.leg {
+    width: 12px;
+    height: 20px;
+    background: linear-gradient(45deg, #ff8c42, #ff6b1a);
+    border-radius: 0 0 50% 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.cat-tail {
+    width: 8px;
+    height: 40px;
+    background: linear-gradient(45deg, #ff8c42, #ff6b1a);
+    border-radius: 50px;
+    position: absolute;
+    right: -5px;
+    top: 30px;
+    transform-origin: top center;
+    animation: tailWag 2s ease-in-out infinite;
+}
+
+@keyframes tailWag {
+    0%, 100% { transform: rotate(10deg); }
+    50% { transform: rotate(-10deg); }
+}
+
+.love-message {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-top: 15px;
+    position: relative;
+    animation: messageGlow 2s ease-in-out infinite;
+}
+
+@keyframes messageGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    50% { box-shadow: 0 4px 25px rgba(255, 107, 157, 0.4); }
+}
+
+.love-message::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 30px;
+    border: 10px solid transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.95);
+}
+
+.message-text {
+    color: #ff6b9d;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    animation: textPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .magic-btn {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+    }
+    
+    .cat-container {
+        bottom: 10px;
+        right: 10px;
+        transform: scale(0.8);
+    }
+    
+    .love-message {
+        padding: 10px 15px;
+    }
+    
+    .message-text {
+        font-size: 1rem;
+    }
+}
